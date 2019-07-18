@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BlogController!{% endblock %}
+{% block title %}Billetterie Musée du Louvre{% endblock %}
 
 {% block body %}
 
@@ -17,7 +17,7 @@
                 corporis deserunt ducimus eligendi incidunt ipsum iusto magnam maiores modi molestiae molestias nam
                 nobis praesentium quod ratione tenetur voluptatibus?
             </p>
-            <a href="#" class="btn btn-success" role="button">Acheter des billets</a>
+            <a href="{{ path('order_ticket') }}" class="btn btn-success" role="button">Acheter des billets</a>
         </div>
 
     </div>
