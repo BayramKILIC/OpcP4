@@ -7,15 +7,45 @@
     <div class="row">
         <div class="col-12 text-center mt-5">
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid cupiditate distinctio
-                dolores ea eveniet, hic itaque minima natus optio quibusdam quis ratione repellendus soluta tenetur
-                ullam vel voluptate. Odit.
-                Asperiores beatae corporis dolor, doloremque, eaque eos est et hic ipsam ipsum laborum magni natus non
-                perferendis porro quas quia quos ratione sapiente similique sint sunt tenetur velit veritatis
-                voluptatum.
-                Aliquam amet asperiores consequatur dolor exercitationem, iste necessitatibus nesciunt! Amet animi,
-                corporis deserunt ducimus eligendi incidunt ipsum iusto magnam maiores modi molestiae molestias nam
-                nobis praesentium quod ratione tenetur voluptatibus?
+            <h3>Bienvenu sur la billetterie du Musée du Louvre </h3>
+            <p>Le musée est ouvert tous les jours sauf le mardi, le dimanche et les jours fériés (1er mai, 1er novembre et 25 décembre).<br/>
+                Le musée propose plusieurs types de tarifs :<br/>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Type de tarif</th>
+                    <th scope="col">Condition(s)</th>
+                    <th scope="col">Prix journée</th>
+                    <th scope="col">Prix demi-journée</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Normal</td>
+                    <td>A partir de 12 ans</td>
+                    <td>16€</td>
+                    <td>8€</td>
+                </tr>
+                <tr>
+                    <td>Enfant</td>
+                    <td>Entre 4 et 12 ans</td>
+                    <td>8€</td>
+                    <td>4€</td>
+                </tr>
+                <tr>
+                    <td>Senior</td>
+                    <td>A partir de 60 ans</td>
+                    <td>12€</td>
+                    <td>6€</td>
+                </tr>
+                <tr>
+                    <td>Réduit</td>
+                    <td>Etudiant, employé du musée, d’un service du Ministère de la Culture et militaire</td>
+                    <td>10€</td>
+                    <td>5€</td>
+                </tr>
+                </tbody>
+            </table>
             </p>
             <a href="{{ path('order_ticket') }}" class="btn btn-success" role="button">Acheter des billets</a>
         </div>
