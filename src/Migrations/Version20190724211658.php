@@ -24,7 +24,7 @@ final class Version20190724211658 extends AbstractMigration
 
         $this->addSql('CREATE TABLE `order` (id INT AUTO_INCREMENT NOT NULL, order_date DATETIME NOT NULL, visit_date DATETIME NOT NULL, ticket_number INT NOT NULL, visit_type INT NOT NULL, email VARCHAR(255) NOT NULL, total_price DOUBLE PRECISION NOT NULL, order_code VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE ticket (id INT AUTO_INCREMENT NOT NULL, order_id_id INT NOT NULL, first_name VARCHAR(255) NOT NULL, last_name VARCHAR(255) NOT NULL, country VARCHAR(255) NOT NULL, birthdate DATETIME NOT NULL, reduction TINYINT(1) NOT NULL, price DOUBLE PRECISION NOT NULL, INDEX IDX_97A0ADA3FCDAEAAA (order_id_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE ticket ADD CONSTRAINT FK_97A0ADA3FCDAEAAA FOREIGN KEY (order_id_id) REFERENCES `order` (id)');
+        $this->addSql('ALTER TABLE ticketphp ADD CONSTRAINT FK_97A0ADA3FCDAEAAA FOREIGN KEY (order_id_id) REFERENCES `order` (id)');
     }
 
     public function down(Schema $schema) : void
