@@ -16,11 +16,7 @@ class Ticket
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $orderId;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -52,22 +48,18 @@ class Ticket
      */
     private $price;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Booking", inversedBy="y")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $booking;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getOrderId(): ?Order
-    {
-        return $this->orderId;
-    }
 
-    public function setOrderId(?Order $orderId): self
-    {
-        $this->orderId = $orderId;
-
-        return $this;
-    }
 
     public function getFirstName(): ?string
     {
@@ -137,6 +129,18 @@ class Ticket
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getBooking(): ?Booking
+    {
+        return $this->booking;
+    }
+
+    public function setBooking(?Booking $booking): self
+    {
+        $this->booking = $booking;
 
         return $this;
     }
