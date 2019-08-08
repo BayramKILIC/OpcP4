@@ -9,6 +9,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ticket
 {
+    const ONE_DAY_NORMAL = 16;  // price list
+    const HALF_DAY_NORMAL = 16;
+    const ONE_DAY_CHILD = 8;
+    const HALF_DAY_CHILD = 4;
+    const ONE_DAY_SENIOR = 12;
+    const HALF_DAY_SENIOR = 6;
+    const ONE_DAY_DISCOUNT = 10;
+    const HALF_DAY_DISCOUNT = 5;
+
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

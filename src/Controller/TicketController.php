@@ -67,7 +67,7 @@ class TicketController extends AbstractController
         }
 
         return $this->render('ticket/identification.html.twig', [
-
+            'form'=>$form->createView()
         ]);
     }
 

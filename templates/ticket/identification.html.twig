@@ -4,10 +4,11 @@
 
 {% block body %}
 
-    {{ form_start(ticket) }}
-    {{ form_widget(ticket) }}
+
+    {{ form_start(form.tickets) }}
+    {{ form_widget(form.tickets) }}
     <button type="submit" class="btn btn-success">Valider</button>
-    {{ form_end(ticket) }}
+    {{ form_end(form.tickets) }}
 
 
 

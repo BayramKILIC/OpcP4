@@ -17,8 +17,6 @@ class TicketType extends AbstractType
             ->add('country')
             ->add('birthdate')
             ->add('reduction')
-            ->add('price')
-            ->add('booking')
         ;
     }
 
