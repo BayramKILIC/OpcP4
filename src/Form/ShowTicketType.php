@@ -14,6 +14,9 @@ class ShowTicketType extends AbstractType
         $builder
             ->add('tickets',CollectionType::class, array (
                 'entry_type' => TicketType::class,
+                'entry_options' => [
+                    'label' => false,
+                ]
                             ))
         ;
     }

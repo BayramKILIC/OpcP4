@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Ticket;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,8 +16,9 @@ class TicketType extends AbstractType
         $builder
             ->add('firstName')
             ->add('lastName')
-            ->add('country')
-            ->add('birthdate')
+            ->add('country', CountryType::class, [
+            'preferred_choices' => ['FR', 'GB']])
+            ->add('birthdate', BirthdayType::class)
             ->add('reduction')
         ;
     }

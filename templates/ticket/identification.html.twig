@@ -5,10 +5,15 @@
 {% block body %}
 
 
-    {{ form_start(form.tickets) }}
-    {{ form_widget(form.tickets) }}
+    {{ form_start(form) }}
+    {% for fticket in form.tickets %}
+      Visiteur n° {{ loop.index }}
+        {{ form_widget(fticket) }}
+        <hr>
+    {% endfor %}
+
     <button type="submit" class="btn btn-success">Valider</button>
-    {{ form_end(form.tickets) }}
+    {{ form_end(form) }}
 
 
 

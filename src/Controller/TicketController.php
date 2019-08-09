@@ -6,6 +6,7 @@ use App\Entity\Booking;
 use App\Entity\Ticket;
 use App\Form\FormStepOneType;
 use App\Form\ShowTicketType;
+use App\Manager\BookingManager;
 use App\Services\PriceCalculator;
 use AppBundle\Manager\VisitManager;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -27,25 +28,22 @@ class TicketController extends AbstractController
 
     /**
      * @Route("/ticket", name="order_ticket")
+     * @param Request $request
+     * @param BookingManager $bookingManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function orderTicket(Request $request, SessionInterface $session)
+    public function orderTicket(Request $request, BookingManager $bookingManager)
     {
-        $order = new Booking();
-        $form = $this->createForm(FormStepOneType::class, $order);
+        $booking = $bookingManager->initNewBooking();
+
+        $form = $this->createForm(FormStepOneType::class, $booking);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-
-            for($i= 1; $i<=$order->getTicketNumber(); $i++)
-            {
-                $order->addTicket(new Ticket());
-            }
-
-            $session->set('currentBooking', $order);
-
-
+            $bookingManager->generateEmptyTickets($booking);
             return $this->redirectToRoute('order_name');
-
         }
+
         return $this->render('ticket/ticket.html.twig', [
             'formStepOne' => $form->createView()
         ]);
@@ -54,27 +52,31 @@ class TicketController extends AbstractController
     /**
      * @Route("/identification", name="order_name")
      */
-    public function order_name(Request $request, SessionInterface $session)
+    public function orderName(Request $request, BookingManager $bookingManager, PriceCalculator $calculator)
     {
-        $order = $session->get('currentBooking');
+        $order = $bookingManager->getCurrentBooking();
         $form = $this->createForm(ShowTicketType::class, $order);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-
-            return $this->redirect($this->generateUrl('order_name'));
+            //$calculator->computePrice($booking);
+            return $this->redirect($this->generateUrl('order_recap'));
         }
 
         return $this->render('ticket/identification.html.twig', [
-            'form'=>$form->createView()
+            'form' => $form->createView()
         ]);
+
+
     }
 
-
-
-    public function orderTickets(PriceCalculator $calculator)
+    /**
+     * @Route("/recap", name="order_recap")
+     */
+    public function orderRecap(SessionInterface $session)
     {
-        //$calculator->computePrice($booking);
+
+        dd($session->get('currentBooking'));
     }
 }
