@@ -2,26 +2,28 @@
 
 {% block body %}
 
-    <ul>
-        <li><strong>Date de visite :</strong> {{ booking.visitDate | date('d/m/Y') }}</li>
-        <li><strong>Type de visite :</strong>
+<div class="col-8 offset-2 text-center mt-5 border border-secondary pt-4 pb-4">
+<h3> Recapitulatif de votre commande</h3>
+
+        <strong>Date de visite :</strong> {{ booking.visitDate | date('d/m/Y') }}<br/>
+        <strong>Type de visite :</strong>
             {% if booking.visitType is constant('TYPE_DAY', booking ) %}
-                Journée complète
+                Journée complète <br/>
             {% endif %}
             {% if booking.visitType is constant('TYPE_HALF_DAY', booking) %}
-                Demi-journée
+                Demi-journée <br/>
             {% endif %}
-        </li>
-        <li>
+
             {% for ticket in booking.tickets %}
                 <strong>Ticket n° {{ loop.index }} :</strong> {{ ticket.lastName }} {{ ticket.firstName }} - {{ ticket.price }} euros <br/>
             {% endfor %}
-        </li>
-        <li><strong>Prix total :</strong> {{ booking.totalPrice }} euros</li>
-        <li><strong>Votre adresse mail :</strong> {{ booking.email }}</li>
-    </ul>
 
-    <button type="submit" class="btn btn-success">Acceder au paiement</button>
+        <strong>Prix total :</strong> {{ booking.totalPrice }} euros <br/>
+        <strong>Votre adresse mail :</strong> {{ booking.email }} <br/>
+
+
+    <button type="submit" class="btn btn-success mt-3">Acceder au paiement</button>
+</div>
 {% endblock %}
 
 {% block title %}
