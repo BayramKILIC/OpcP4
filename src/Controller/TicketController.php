@@ -54,13 +54,12 @@ class TicketController extends AbstractController
      */
     public function orderName(Request $request, BookingManager $bookingManager, PriceCalculator $calculator)
     {
-        $order = $bookingManager->getCurrentBooking();
-        $form = $this->createForm(ShowTicketType::class, $order);
+        $booking = $bookingManager->getCurrentBooking();
+        $form = $this->createForm(ShowTicketType::class, $booking);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            //$calculator->computePrice($booking);
+            $calculator->computeTotalPrice($booking);
             return $this->redirect($this->generateUrl('order_recap'));
         }
 
@@ -74,9 +73,12 @@ class TicketController extends AbstractController
     /**
      * @Route("/recap", name="order_recap")
      */
-    public function orderRecap(SessionInterface $session)
+    public function orderRecap(BookingManager $bookingManager)
     {
+        $booking = $bookingManager->getCurrentBooking();
 
-        dd($session->get('currentBooking'));
+        return $this->render('ticket/recap.html.twig', [
+            'booking' => $booking
+        ]);
     }
 }

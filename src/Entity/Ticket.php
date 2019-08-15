@@ -100,7 +100,7 @@ class Ticket
         return $this;
     }
 
-    public function getBirthdate(): ?\DateTimeInterface
+    public function getBirthdate(): ?\DateTime
     {
         return $this->birthdate;
     }

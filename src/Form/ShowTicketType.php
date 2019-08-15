@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Booking;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,6 +25,7 @@ class ShowTicketType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
+            'data_class' => Booking::class,
             // Configure your form options here
         ]);
     }

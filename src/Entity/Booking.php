@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -31,6 +32,11 @@ class Booking
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Range(
+     *      min = "now",
+     *      max = "first day of January next year UTC"
+     * )
+     * @Assert\NotNull()
      */
     private $visitDate;
 
@@ -86,7 +92,7 @@ class Booking
         return $this;
     }
 
-    public function getVisitDate(): ?\DateTimeInterface
+    public function getVisitDate(): ?\DateTime
     {
         return $this->visitDate;
     }

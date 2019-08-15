@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <ul>
+        <li><strong>Date de visite :</strong> {{ booking.visitDate | date('d/m/Y') }}</li>
+        <li><strong>Type de visite :</strong>
+            {% if booking.visitType is constant('TYPE_DAY', booking ) %}
+                Journée complète
+            {% endif %}
+            {% if booking.visitType is constant('TYPE_HALF_DAY', booking) %}
+                Demi-journée
+            {% endif %}
+        </li>
+        <li>
+            {% for ticket in booking.tickets %}
+                <strong>Ticket n° {{ loop.index }} :</strong> {{ ticket.lastName }} {{ ticket.firstName }} - {{ ticket.price }} euros <br/>
+            {% endfor %}
+        </li>
+        <li><strong>Prix total :</strong> {{ booking.totalPrice }} euros</li>
+        <li><strong>Votre adresse mail :</strong> {{ booking.email }}</li>
+    </ul>
+
+    <button type="submit" class="btn btn-success">Acceder au paiement</button>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
