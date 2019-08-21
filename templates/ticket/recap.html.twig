@@ -21,8 +21,19 @@
         <strong>Prix total :</strong> {{ booking.totalPrice }} euros <br/>
         <strong>Votre adresse mail :</strong> {{ booking.email }} <br/>
 
-
-    <button type="submit" class="btn btn-success mt-3">Acceder au paiement</button>
+        <form action="" method="POST">
+                <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="pk_test_Ww2Gco5S1XyEYBOc9D1WpzVz00ck9Py7yF"
+                        data-amount="{{booking.totalPrice * 100}}"
+                        data-name="Musée du Louvre"
+                        data-description="Billet d'entrée"
+                        data-image="/"
+                        data-currency="eur"
+                        data-allow-remember-me="false"
+                        data-locale="auto">
+                </script>
+        </form>
 </div>
 {% endblock %}
 

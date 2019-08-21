@@ -73,12 +73,32 @@ class TicketController extends AbstractController
     /**
      * @Route("/recap", name="order_recap")
      */
-    public function orderRecap(BookingManager $bookingManager)
+    public function orderRecap(BookingManager $bookingManager, Request $request)
     {
         $booking = $bookingManager->getCurrentBooking();
+         if ($request->isMethod('POST')) {
+             if($bookingManager->doPayment($booking)){
+                 // TodO redirect confirmation
+             }else{
+                 // TODO à traiter
+             }
+
+         }
+
 
         return $this->render('ticket/recap.html.twig', [
             'booking' => $booking
         ]);
     }
+
+    /**
+     * @Route("/payment", name="order_payment")
+     */
+    public function orderPaiement(BookingManager $bookingManager)
+    {
+
+        return $this->render('ticket/checkout.html.twig', [
+        ]);
+    }
+
 }

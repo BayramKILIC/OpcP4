@@ -5,6 +5,7 @@ namespace App\Manager;
 
 use App\Entity\Booking;
 use App\Entity\Ticket;
+use App\Services\Paiement;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -16,10 +17,16 @@ class BookingManager
      * @var SessionInterface
      */
     private $session;
+    /**
+     * @var Paiement
+     */
+    private $payment;
 
-    public function __construct(SessionInterface $session)
+
+    public function __construct(SessionInterface $session, Paiement $payment)
     {
         $this->session = $session;
+        $this->payment = $payment;
     }
 
     public function initNewBooking()
@@ -52,4 +59,14 @@ class BookingManager
 
         return $booking;
     }
+
+    public function doPayment(Booking $booking)
+    {
+        $reference = $this->payment->doPayment($booking -> getTotalPrice(), "xxx");
+        if($reference){
+            $booking->setOrderCode($reference['id']);
+
+        };
+    }
+
 }
