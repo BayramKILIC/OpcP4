@@ -32,7 +32,7 @@ class Paiement
                 "amount" => $amount * 100,
                 "currency" => "eur",
                 "source" => $token,
-                "description" => "$description"
+                "description" => $description
             ));
         }catch (Card $exception){
             return false;

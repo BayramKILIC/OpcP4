@@ -34,7 +34,7 @@ class Booking
      * @ORM\Column(type="datetime")
      * @Assert\Range(
      *      min = "now",
-     *      max = "first day of January next year UTC"
+     *      max = "+1 year"
      * )
      * @Assert\NotNull()
      */

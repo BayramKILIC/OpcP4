@@ -13,13 +13,30 @@
             {% if booking.visitType is constant('TYPE_HALF_DAY', booking) %}
                 Demi-journée <br/>
             {% endif %}
+        <strong>Votre adresse mail :</strong> {{ booking.email }} <br/>
+        <strong>Prix total : {{ booking.totalPrice }} euros </strong><br/><br/>
+
+    <table class="table text-center border col-8 offset-2">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Visiteur</th>
+            <th scope="col">Date de naissance</th>
+            <th scope="col">Prix</th>
+        </tr>
+        </thead>
 
             {% for ticket in booking.tickets %}
-                <strong>Ticket n° {{ loop.index }} :</strong> {{ ticket.lastName }} {{ ticket.firstName }} - {{ ticket.price }} euros <br/>
+                            <tbody>
+                                    <tr>
+                                            <th scope="row"> Ticket n° {{ loop.index }} </th>
+                                            <td>{{ ticket.lastName }} {{ ticket.firstName }}</td>
+                                            <td>{{ ticket.birthDate | date('d/m/Y') }}</td>
+                                            <td> {{ ticket.price }} euros</td>
+                                    </tr>
+                            </tbody>
             {% endfor %}
-
-        <strong>Prix total :</strong> {{ booking.totalPrice }} euros <br/>
-        <strong>Votre adresse mail :</strong> {{ booking.email }} <br/>
+    </table>
 
         <form action="" method="POST">
                 <script
@@ -31,6 +48,7 @@
                         data-image="/"
                         data-currency="eur"
                         data-allow-remember-me="false"
+                        data-label="Accéder au paiement"
                         data-locale="auto">
                 </script>
         </form>

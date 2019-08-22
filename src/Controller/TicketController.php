@@ -8,7 +8,6 @@ use App\Form\FormStepOneType;
 use App\Form\ShowTicketType;
 use App\Manager\BookingManager;
 use App\Services\PriceCalculator;
-use AppBundle\Manager\VisitManager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,17 +71,34 @@ class TicketController extends AbstractController
 
     /**
      * @Route("/recap", name="order_recap")
+     * @param BookingManager $bookingManager
+     * @param Request $request
      */
     public function orderRecap(BookingManager $bookingManager, Request $request)
     {
         $booking = $bookingManager->getCurrentBooking();
          if ($request->isMethod('POST')) {
              if($bookingManager->doPayment($booking)){
-                 // TodO redirect confirmation
-             }else{
-                 // TODO à traiter
-             }
+                 $em = $this->getDoctrine()->getManager();
+                 $em->persist($booking);
+                 $em->flush();
 
+                 $this->addFlash(
+                     'notice',
+                     'Your changes were saved!'
+                 );
+
+                 return $this->redirect($this->generateUrl('confirmation'));
+
+             }else{
+
+                 $this->addFlash(
+                     'notice',
+                     'Your changes were not saved!'
+                 );
+
+                 return $this->redirect($this->generateUrl('home'));
+             }
          }
 
 
@@ -92,12 +108,15 @@ class TicketController extends AbstractController
     }
 
     /**
-     * @Route("/payment", name="order_payment")
+     * @Route("/confirmation", name="order_confirmation")
      */
-    public function orderPaiement(BookingManager $bookingManager)
+    public function confirmation(BookingManager $bookingManager)
     {
+        $booking = $bookingManager->getCurrentBooking();
 
-        return $this->render('ticket/checkout.html.twig', [
+
+        return $this->render('confirmation.html.twig', [
+            'booking' => $booking
         ]);
     }
 
