@@ -54,6 +54,7 @@ class TicketController extends AbstractController
     public function orderName(Request $request, BookingManager $bookingManager, PriceCalculator $calculator)
     {
         $booking = $bookingManager->getCurrentBooking();
+        dump($booking);
         $form = $this->createForm(ShowTicketType::class, $booking);
         $form->handleRequest($request);
 
@@ -79,25 +80,17 @@ class TicketController extends AbstractController
         $booking = $bookingManager->getCurrentBooking();
          if ($request->isMethod('POST')) {
              if($bookingManager->doPayment($booking)){
-                 $em = $this->getDoctrine()->getManager();
-                 $em->persist($booking);
-                 $em->flush();
 
-                 $this->addFlash(
-                     'notice',
-                     'Your changes were saved!'
-                 );
 
-                 return $this->redirect($this->generateUrl('confirmation'));
+                 return $this->redirect($this->generateUrl('order_confirmation'));
 
              }else{
 
                  $this->addFlash(
-                     'notice',
-                     'Your changes were not saved!'
+                     'danger',
+                     'Un problème de paiement a été rencontré, merci de réessayer'
                  );
 
-                 return $this->redirect($this->generateUrl('home'));
              }
          }
 
@@ -113,9 +106,10 @@ class TicketController extends AbstractController
     public function confirmation(BookingManager $bookingManager)
     {
         $booking = $bookingManager->getCurrentBooking();
+        // TODO $bookingManager->removeCurrentBooking();
 
 
-        return $this->render('confirmation.html.twig', [
+        return $this->render('ticket/confirmation.html.twig', [
             'booking' => $booking
         ]);
     }

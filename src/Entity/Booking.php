@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Validator as LouvreAssert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
+ *
  */
 class Booking
 {
@@ -37,6 +39,7 @@ class Booking
      *      max = "+1 year"
      * )
      * @Assert\NotNull()
+     * @LouvreAssert\NotTuesday()
      */
     private $visitDate;
 
@@ -66,7 +69,8 @@ class Booking
     private $orderCode;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Ticket", mappedBy="booking")
+     * @ORM\OneToMany(targetEntity="App\Entity\Ticket", mappedBy="booking" ,cascade={"persist"})
+     * @Assert\Valid()
      */
     private $tickets;
 

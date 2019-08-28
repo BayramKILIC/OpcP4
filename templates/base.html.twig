@@ -27,7 +27,20 @@
     </div> #}
 
 </nav>
+
+
+
 <div class="container">
+
+    {# read and display all flash messages #}
+    {% for type, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="col-8 offset-2 alert alert-{{type}}">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+    {% endfor %}
     {% block body %}{% endblock %}
 </div>
 {% block javascripts %}{% endblock %}

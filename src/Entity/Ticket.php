@@ -26,7 +26,7 @@ class Ticket
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(
-     *     min=5,
+     *     min=2,
      *     max=50,
      *     minMessage="Nombre de caractère insuffisant",
      *     maxMessage="Nombre de caractère maximum atteint"

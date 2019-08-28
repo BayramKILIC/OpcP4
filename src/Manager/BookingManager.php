@@ -6,6 +6,7 @@ namespace App\Manager;
 use App\Entity\Booking;
 use App\Entity\Ticket;
 use App\Services\Paiement;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -21,12 +22,17 @@ class BookingManager
      * @var Paiement
      */
     private $payment;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
 
 
-    public function __construct(SessionInterface $session, Paiement $payment)
+    public function __construct(SessionInterface $session, Paiement $payment, EntityManagerInterface $em)
     {
         $this->session = $session;
         $this->payment = $payment;
+        $this->em = $em;
     }
 
     public function initNewBooking()
@@ -50,23 +56,32 @@ class BookingManager
     public function getCurrentBooking()
     {
 
-        $booking =  $this->session->get(self::SESSION_ID);
+        $booking = $this->session->get(self::SESSION_ID);
 
-        if(!$booking instanceof  Booking){
+        if (!$booking instanceof Booking) {
             throw  new NotFoundHttpException();
         }
-
-
         return $booking;
+    }
+
+    public function removeCurrentBooking()
+    {
+
+        $this->session->remove(self::SESSION_ID);
+
     }
 
     public function doPayment(Booking $booking)
     {
-        $reference = $this->payment->doPayment($booking -> getTotalPrice(), "xxx");
-        if($reference){
+        $reference = $this->payment->doPayment($booking->getTotalPrice(), "xxx");
+        if ($reference) {
             $booking->setOrderCode($reference['id']);
-
+            $booking->setOrderDate(new \DateTime());
+            $this->em->persist($booking);
+            $this->em->flush();
+            return true;
         };
+        return false;
     }
 
 }
