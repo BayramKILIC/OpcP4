@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Validator as LouvreAssert;
+use Doctrine\Common\Annotations\Annotation\Target;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -40,6 +41,7 @@ class Booking
      * )
      * @Assert\NotNull()
      * @LouvreAssert\NotTuesday()
+     * @LouvreAssert\NotSunday()
      */
     private $visitDate;
 
