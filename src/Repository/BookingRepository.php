@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Booking;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -18,6 +19,28 @@ class BookingRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Booking::class);
     }
+
+    public function countNbTickets($visitDate)
+    {
+
+        $qb = $this->createQueryBuilder('v');
+
+        $qb->select('sum(v.ticketNumber)')
+            ->where('v.visitDate = :visitDate')
+            ->setParameter('visitDate', $visitDate);
+
+
+        try {
+            return $qb
+                ->getQuery()->getSingleScalarResult();
+        } catch (NonUniqueResultException $e) {
+        }
+    }
+
+}
+
+
+
 
     // /**
     //  * @return Booking[] Returns an array of Booking objects
@@ -47,4 +70,4 @@ class BookingRepository extends ServiceEntityRepository
         ;
     }
     */
-}
+
