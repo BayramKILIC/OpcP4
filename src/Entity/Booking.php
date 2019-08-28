@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
  * @LouvreAssert\ThousandTicketsReached()
+ * @LouvreAssert\NotFullDayAfter14h()
  *
  */
 class Booking
@@ -37,7 +38,7 @@ class Booking
     /**
      * @ORM\Column(type="datetime")
      * @Assert\Range(
-     *      min = "now",
+     *      min = "today",
      *      max = "+1 year"
      * )
      * @Assert\NotNull()
