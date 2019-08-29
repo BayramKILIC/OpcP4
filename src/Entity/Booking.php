@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
  * @LouvreAssert\ThousandTicketsReached()
  * @LouvreAssert\NotFullDayAfter14h()
+ * @LouvreAssert\NotPublicHolidays()
  *
  */
 class Booking
