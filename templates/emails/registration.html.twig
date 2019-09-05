@@ -1,0 +1,22 @@
+Madame, monsieur,
+
+<p> votre commande n° {{ booking.orderCode }} a été confirmé. Ci-dessous un récapitulatif de votre commande : </p>
+
+Prix total : {{ booking.totalPrice }}
+Date de la commande : {{ booking.orderDate }}
+
+{% for ticket in booking.tickets %}
+    <tbody>
+    <tr>
+        <th scope="row"> Ticket n° {{ loop.index }} </th>
+        <td>{{ ticket.lastName }} {{ ticket.firstName }}</td>
+        <td>{{ ticket.birthDate | date('d/m/Y') }}</td>
+        <td> {{ ticket.price }} euros</td>
+        <td> {{ ticket.country }}</td>
+        <td> {{ ticket.reduction? "Oui":"Non" }}</td>
+    </tr>
+    </tbody>
+{% endfor %}
+
+{# Makes an absolute URL to the /images/logo.png file #}
+<img src="{{ absolute_url(asset('/images/logo.jpg')) }}">

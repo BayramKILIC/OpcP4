@@ -79,6 +79,7 @@ class PriceCalculator
         }
 
         $booking->setTotalPrice($totalPrice);
+
         return $totalPrice;
     }
 

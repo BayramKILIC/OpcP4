@@ -7,6 +7,7 @@ use App\Entity\Ticket;
 use App\Form\FormStepOneType;
 use App\Form\ShowTicketType;
 use App\Manager\BookingManager;
+use App\Services\EmailServiceee;
 use App\Services\PriceCalculator;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -75,13 +76,13 @@ class TicketController extends AbstractController
      * @param BookingManager $bookingManager
      * @param Request $request
      */
-    public function orderRecap(BookingManager $bookingManager, Request $request)
+    public function orderRecap(BookingManager $bookingManager, Request $request, EmailServiceee $email)
     {
         $booking = $bookingManager->getCurrentBooking();
          if ($request->isMethod('POST')) {
              if($bookingManager->doPayment($booking)){
 
-
+                 $email->sendMail($booking);
                  return $this->redirect($this->generateUrl('order_confirmation'));
 
              }else{
@@ -90,10 +91,8 @@ class TicketController extends AbstractController
                      'danger',
                      'Un problème de paiement a été rencontré, merci de réessayer'
                  );
-
              }
          }
-
 
         return $this->render('ticket/recap.html.twig', [
             'booking' => $booking
@@ -103,7 +102,7 @@ class TicketController extends AbstractController
     /**
      * @Route("/confirmation", name="order_confirmation")
      */
-    public function confirmation(BookingManager $bookingManager)
+    public function confirmation(BookingManager $bookingManager, EmailServiceee $email)
     {
         $booking = $bookingManager->getCurrentBooking();
         // TODO $bookingManager->removeCurrentBooking();
