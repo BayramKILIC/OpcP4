@@ -29,41 +29,31 @@ class PriceCalculator
         $age = $birthday->diff($visitdate)->y;
         $discount = $ticket->getReduction();
 
-        if ($age < self::AGE_CHILD) {
-            if ($booking->getVisitType()== $booking::TYPE_DAY) {
-                $price = self::ONE_DAY_BABY;
-            }
-            if ($booking->getVisitType() == $booking::TYPE_HALF_DAY) {
-                $price = self::ONE_DAY_BABY * self::HALF_DAY_COEFF;
-            }
+
+            if ($age < self::AGE_CHILD) {
+                    $price = self::ONE_DAY_BABY;
+
+            } elseif ($age > self::AGE_SENIOR && $discount == false) {
+                    $price = self::ONE_DAY_SENIOR;
+
+            } elseif ($age > self::AGE_SENIOR && $discount == true) {
+                $price = self::ONE_DAY_DISCOUNT;
+
+            } elseif ($age >= self::AGE_CHILD && $age <= self::AGE_NORMAL) {
+                    $price = self::ONE_DAY_CHILD;
+
+            } elseif ($age > self::AGE_NORMAL && $age < self::AGE_SENIOR && $discount == false) {
+                    $price = self::ONE_DAY_NORMAL;
+
+            } elseif ($age > self::AGE_NORMAL && $age < self::AGE_SENIOR && $discount == true) {
+                $price = self::ONE_DAY_DISCOUNT;
+                }
+
+
+        if ($booking->getVisitType() == $booking::TYPE_HALF_DAY) {
+            $price = $price * self::HALF_DAY_COEFF;
         }
 
-        elseif ($age > self::AGE_SENIOR) {
-            if ($booking->getVisitType()== $booking::TYPE_DAY) {
-                $price = self::ONE_DAY_SENIOR;
-            }
-            if ($booking->getVisitType() == $booking::TYPE_HALF_DAY) {
-                $price = self::ONE_DAY_SENIOR * self::HALF_DAY_COEFF;
-            }
-        }
-
-        elseif ($age >= self::AGE_CHILD && $age <= self::AGE_NORMAL) {
-            if ($booking->getVisitType() == $booking::TYPE_DAY) {
-                $price = self::ONE_DAY_CHILD;
-            }
-            if ($booking->getVisitType() == $booking::TYPE_HALF_DAY) {
-                $price = self::ONE_DAY_CHILD * self::HALF_DAY_COEFF;
-            }
-        }
-
-        elseif ($age > self::AGE_NORMAL and $age < self::AGE_SENIOR) {
-            if ($booking->getVisitType()== $booking::TYPE_DAY) {
-                $price = self::ONE_DAY_NORMAL;
-            }
-            if ($booking->getVisitType() == $booking::TYPE_HALF_DAY) {
-                $price = self::ONE_DAY_NORMAL * self::HALF_DAY_COEFF;
-            }
-        }
         $ticket->setPrice($price);
         return $price;
 
