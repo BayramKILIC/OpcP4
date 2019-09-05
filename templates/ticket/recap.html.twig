@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<div class="col-8 offset-2 text-center mt-5 border border-secondary pt-4 pb-4">
+<div class="col-10 offset-1 text-center mt-5 border border-secondary pt-4 pb-4">
 <h3> Recapitulatif de votre commande</h3>
 
         <strong>Date de visite :</strong> {{ booking.visitDate | date('d/m/Y') }}<br/>
@@ -16,13 +16,15 @@
         <strong>Votre adresse mail :</strong> {{ booking.email }} <br/>
         <strong>Prix total : {{ booking.totalPrice }} euros </strong><br/><br/>
 
-    <table class="table text-center border col-8 offset-2">
+    <table class="table text-center border col-10 offset-1">
         <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Visiteur</th>
             <th scope="col">Date de naissance</th>
             <th scope="col">Prix</th>
+            <th scope="col">Pays</th>
+            <th scope="col">Tarif réduit</th>
         </tr>
         </thead>
 
@@ -33,6 +35,8 @@
                                             <td>{{ ticket.lastName }} {{ ticket.firstName }}</td>
                                             <td>{{ ticket.birthDate | date('d/m/Y') }}</td>
                                             <td> {{ ticket.price }} euros</td>
+                                             <td> {{ ticket.country }}</td>
+                                             <td> {{ ticket.reduction? "Oui":"Non" }}</td>
                                     </tr>
                             </tbody>
             {% endfor %}

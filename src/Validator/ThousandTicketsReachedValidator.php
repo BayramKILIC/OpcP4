@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 class ThousandTicketsReachedValidator extends ConstraintValidator
 {
     private $em;
-    const LOUVRE_MAX_TICKETS = 2;
+    const LOUVRE_MAX_TICKETS = 1000;
 
 
     public function __construct(EntityManagerInterface $em)
@@ -34,7 +34,7 @@ class ThousandTicketsReachedValidator extends ConstraintValidator
         $visitDate =$object->getVisitDate();
         $total = $this->em->getRepository(Booking::class)->countNbTickets($visitDate);
 
-        if( $total + $object->getTicketNumber() > SELF::LOUVRE_MAX_TICKETS) {
+        if( $total + $object->getTicketNumber() > self::LOUVRE_MAX_TICKETS) {
             $this->context->buildViolation($constraint->message)
                 ->addViolation();
 

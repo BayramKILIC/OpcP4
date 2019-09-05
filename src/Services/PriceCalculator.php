@@ -29,7 +29,6 @@ class PriceCalculator
         $age = $birthday->diff($visitdate)->y;
         $discount = $ticket->getReduction();
 
-dump($age);
         if ($age < self::AGE_CHILD) {
             if ($booking->getVisitType()== $booking::TYPE_DAY) {
                 $price = self::ONE_DAY_BABY;
@@ -65,7 +64,6 @@ dump($age);
                 $price = self::ONE_DAY_NORMAL * self::HALF_DAY_COEFF;
             }
         }
-dump($price);
         $ticket->setPrice($price);
         return $price;
 
