@@ -1,9 +1,11 @@
+<img src="{{ imgLink }}">
+
 Madame, monsieur,
 
 <p> votre commande n° {{ booking.orderCode }} a été confirmé. Ci-dessous un récapitulatif de votre commande : </p>
 
 Prix total : {{ booking.totalPrice }}
-Date de la commande : {{ booking.orderDate }}
+Date de la commande : {{ booking.orderDate | date('d/m/Y')}}
 
 {% for ticket in booking.tickets %}
     <tbody>
@@ -19,4 +21,3 @@ Date de la commande : {{ booking.orderDate }}
 {% endfor %}
 
 {# Makes an absolute URL to the /images/logo.png file #}
-<img src="{{ absolute_url(asset('/images/logo.jpg')) }}">

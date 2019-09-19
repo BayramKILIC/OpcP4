@@ -2,17 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Booking;
-use App\Entity\Ticket;
 use App\Form\FormStepOneType;
 use App\Form\ShowTicketType;
 use App\Manager\BookingManager;
-use App\Services\EmailServiceee;
 use App\Services\PriceCalculator;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TicketController extends AbstractController
@@ -75,24 +70,24 @@ class TicketController extends AbstractController
      * @Route("/recap", name="order_recap")
      * @param BookingManager $bookingManager
      * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function orderRecap(BookingManager $bookingManager, Request $request, EmailServiceee $email)
+    public function orderRecap(BookingManager $bookingManager, Request $request)
     {
         $booking = $bookingManager->getCurrentBooking();
-         if ($request->isMethod('POST')) {
-             if($bookingManager->doPayment($booking)){
+        if ($request->isMethod('POST')) {
 
-                 $email->sendMail($booking);
-                 return $this->redirect($this->generateUrl('order_confirmation'));
+            if ($bookingManager->doPayment($booking)) {
+                return $this->redirect($this->generateUrl('order_confirmation'));
 
-             }else{
+            } else {
 
-                 $this->addFlash(
-                     'danger',
-                     'Un problème de paiement a été rencontré, merci de réessayer'
-                 );
-             }
-         }
+                $this->addFlash(
+                    'danger',
+                    'Un problème de paiement a été rencontré, merci de réessayer'
+                );
+            }
+        }
 
         return $this->render('ticket/recap.html.twig', [
             'booking' => $booking
@@ -102,7 +97,7 @@ class TicketController extends AbstractController
     /**
      * @Route("/confirmation", name="order_confirmation")
      */
-    public function confirmation(BookingManager $bookingManager, EmailServiceee $email)
+    public function confirmation(BookingManager $bookingManager)
     {
         $booking = $bookingManager->getCurrentBooking();
         // TODO $bookingManager->removeCurrentBooking();

@@ -49,7 +49,6 @@ class PriceCalculator
                 $price = self::ONE_DAY_DISCOUNT;
                 }
 
-
         if ($booking->getVisitType() == $booking::TYPE_HALF_DAY) {
             $price = $price * self::HALF_DAY_COEFF;
         }

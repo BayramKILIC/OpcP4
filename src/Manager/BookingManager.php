@@ -5,6 +5,7 @@ namespace App\Manager;
 
 use App\Entity\Booking;
 use App\Entity\Ticket;
+use App\Services\EmailService;
 use App\Services\Paiement;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -26,13 +27,18 @@ class BookingManager
      * @var EntityManagerInterface
      */
     private $em;
+    /**
+     * @var EmailService
+     */
+    private $emailService;
 
 
-    public function __construct(SessionInterface $session, Paiement $payment, EntityManagerInterface $em)
+    public function __construct(SessionInterface $session, Paiement $payment, EntityManagerInterface $em, EmailService $emailService)
     {
         $this->session = $session;
         $this->payment = $payment;
         $this->em = $em;
+        $this->emailService = $emailService;
     }
 
     public function initNewBooking()
@@ -73,12 +79,14 @@ class BookingManager
 
     public function doPayment(Booking $booking)
     {
-        $reference = $this->payment->doPayment($booking->getTotalPrice(), "xxx");
+        // TODO mettre la description
+        $reference = $this->payment->doPayment($booking->getTotalPrice(), "TODO");
         if ($reference) {
             $booking->setOrderCode($reference['id']);
             $booking->setOrderDate(new \DateTime());
             $this->em->persist($booking);
             $this->em->flush();
+            $this->emailService->sendMail($booking);
             return true;
         };
         return false;
