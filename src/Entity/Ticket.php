@@ -70,7 +70,6 @@ class Ticket
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank(groups={"fillTickets"})
-     * @Assert\Date(groups={"fillTickets"})
      */
     private $birthdate;
 

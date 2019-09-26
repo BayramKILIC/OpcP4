@@ -76,7 +76,6 @@ class BookingManager
 
         $booking = $this->session->get(self::SESSION_ID);
 
-        dump($booking->getTickets());
         if (!$booking instanceof Booking) {
             throw  new NotFoundHttpException();
         }
