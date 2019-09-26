@@ -4,8 +4,7 @@
 namespace App\Tests\Services;
 
 
-class ApplicationAvailabilityFunctionalTest
-{
+
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ApplicationAvailabilityFunctionalTest extends WebTestCase
@@ -13,12 +12,12 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
     /**
      * @dataProvider urlProvider
      */
-    public function testPageIsSuccessful($url)
+    public function testPageIsSuccessful($url,$method,$expectedStatus)
     {
         $client = self::createClient();
-        $client->request('GET', $url);
+        $client->request($method, $url);
 
-        $this->assertTrue($client->getResponse()->getStatusCode());
+        $this->assertEquals($expectedStatus,$client->getResponse()->getStatusCode());
     }
 
     public function urlProvider()

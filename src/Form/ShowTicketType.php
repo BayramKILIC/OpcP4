@@ -26,7 +26,7 @@ class ShowTicketType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Booking::class,
-            // Configure your form options here
+            'validation_groups' => 'fillTickets'
         ]);
     }
 }

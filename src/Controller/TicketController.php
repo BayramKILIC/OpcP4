@@ -49,8 +49,7 @@ class TicketController extends AbstractController
      */
     public function orderName(Request $request, BookingManager $bookingManager, PriceCalculator $calculator)
     {
-        $booking = $bookingManager->getCurrentBooking();
-        dump($booking);
+        $booking = $bookingManager->getCurrentBooking(['init']);
         $form = $this->createForm(ShowTicketType::class, $booking);
         $form->handleRequest($request);
 
@@ -74,7 +73,8 @@ class TicketController extends AbstractController
      */
     public function orderRecap(BookingManager $bookingManager, Request $request)
     {
-        $booking = $bookingManager->getCurrentBooking();
+
+        $booking = $bookingManager->getCurrentBooking(['fillTickets','priceComputed']);
         if ($request->isMethod('POST')) {
 
             if ($bookingManager->doPayment($booking)) {
@@ -99,7 +99,7 @@ class TicketController extends AbstractController
      */
     public function confirmation(BookingManager $bookingManager)
     {
-        $booking = $bookingManager->getCurrentBooking();
+        $booking = $bookingManager->getCurrentBooking(['completed']);
         // TODO $bookingManager->removeCurrentBooking();
 
 

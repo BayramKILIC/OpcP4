@@ -24,45 +24,53 @@ class Ticket
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"fillTickets"})
      * @Assert\Length(
      *     min=2,
      *     max=50,
      *     minMessage="Nombre de caractère insuffisant",
-     *     maxMessage="Nombre de caractère maximum atteint"
+     *     maxMessage="Nombre de caractère maximum atteint",
+     *     groups={"fillTickets"}
      * )
      * @Assert\Regex(
      *     pattern="/\d/",
      *     match=false,
-     *     message="Votre prénom ne peut pas contenir de chiffre"
+     *     message="Votre prénom ne peut pas contenir de chiffre",
+     *     groups={"fillTickets"}
      * )
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"fillTickets"})
      * @Assert\Length(
      *     min=2,
      *     max=50,
      *     minMessage="Nombre de caractère insuffisant",
-     *     maxMessage="Nombre de caractère maximum atteint"
+     *     maxMessage="Nombre de caractère maximum atteint",
+     *     groups={"fillTickets"}
      * )
      * @Assert\Regex(
      *     pattern="/\d/",
      *     match=false,
-     *     message="Votre nom ne peut pas contenir de chiffre"
+     *     message="Votre nom ne peut pas contenir de chiffre",
+     *     groups={"fillTickets"}
      * )
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(groups={"fillTickets"})
+     * @Assert\Country(groups={"fillTickets"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank(groups={"fillTickets"})
+     * @Assert\Date(groups={"fillTickets"})
      */
     private $birthdate;
 
@@ -73,6 +81,7 @@ class Ticket
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(groups={"priceComputed"})
      */
     private $price;
 

@@ -12,9 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
- * @LouvreAssert\ThousandTicketsReached()
- * @LouvreAssert\NotFullDayAfter14h()
- * @LouvreAssert\NotPublicHolidays()
+ * @LouvreAssert\ThousandTicketsReached(groups={"init"})
+ * @LouvreAssert\NotFullDayAfter14h(groups={"init"})
+ * @LouvreAssert\NotPublicHolidays(groups={"init"})
  *
  */
 class Booking
@@ -28,6 +28,7 @@ class Booking
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(groups={"completed"})
      */
     private $id;
 
@@ -40,11 +41,12 @@ class Booking
      * @ORM\Column(type="datetime")
      * @Assert\Range(
      *      min = "today",
-     *      max = "+1 year"
+     *      max = "+1 year",
+     *     groups={"init"}
      * )
-     * @Assert\NotNull()
-     * @LouvreAssert\NotTuesday()
-     * @LouvreAssert\NotSunday()
+     * @Assert\NotNull(groups={"init"})
+     * @LouvreAssert\NotTuesday(groups={"init"})
+     * @LouvreAssert\NotSunday(groups={"init"})
      */
     private $visitDate;
 
@@ -65,6 +67,8 @@ class Booking
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(groups="priceComputed")
+     *
      */
     private $totalPrice;
 
@@ -75,13 +79,14 @@ class Booking
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ticket", mappedBy="booking" ,cascade={"persist"})
-     * @Assert\Valid()
+     * @Assert\Valid(groups={"fillTickets","priceComputed"})
      */
     private $tickets;
 
     public function __construct()
     {
         $this->tickets = new ArrayCollection();
+        $this->visitDate = new \DateTime();
     }
 
     public function getId(): ?int

@@ -10,6 +10,7 @@ use App\Services\Paiement;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class BookingManager
 {
@@ -31,14 +32,25 @@ class BookingManager
      * @var EmailService
      */
     private $emailService;
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
 
 
-    public function __construct(SessionInterface $session, Paiement $payment, EntityManagerInterface $em, EmailService $emailService)
+    public function __construct(
+        SessionInterface $session,
+        Paiement $payment,
+        EntityManagerInterface $em,
+        EmailService $emailService,
+        ValidatorInterface $validator
+    )
     {
         $this->session = $session;
         $this->payment = $payment;
         $this->em = $em;
         $this->emailService = $emailService;
+        $this->validator = $validator;
     }
 
     public function initNewBooking()
@@ -59,14 +71,21 @@ class BookingManager
         }
     }
 
-    public function getCurrentBooking()
+    public function getCurrentBooking($groups)
     {
 
         $booking = $this->session->get(self::SESSION_ID);
 
+        dump($booking->getTickets());
         if (!$booking instanceof Booking) {
             throw  new NotFoundHttpException();
         }
+
+        if(count($this->validator->validate($booking,null,$groups))){
+            throw new NotFoundHttpException();
+        }
+
+
         return $booking;
     }
 
