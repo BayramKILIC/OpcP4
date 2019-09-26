@@ -100,7 +100,7 @@ class TicketController extends AbstractController
     public function confirmation(BookingManager $bookingManager)
     {
         $booking = $bookingManager->getCurrentBooking(['completed']);
-        // TODO $bookingManager->removeCurrentBooking();
+        $bookingManager->removeCurrentBooking();
 
 
         return $this->render('ticket/confirmation.html.twig', [
