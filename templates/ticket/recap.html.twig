@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="col-10 offset-1 text-center mt-5 border border-secondary pt-4 pb-4">
+<h3> Recapitulatif de votre commande</h3>
+
+        <strong>Date de visite :</strong> {{ booking.visitDate | date('d/m/Y') }}<br/>
+        <strong>Type de visite :</strong>
+            {% if booking.visitType is constant('TYPE_DAY', booking ) %}
+                Journée complète <br/>
+            {% endif %}
+            {% if booking.visitType is constant('TYPE_HALF_DAY', booking) %}
+                Demi-journée <br/>
+            {% endif %}
+        <strong>Votre adresse mail :</strong> {{ booking.email }} <br/>
+        <strong>Prix total : {{ booking.totalPrice }} euros </strong><br/><br/>
+
+    <table class="table text-center border col-10 offset-1">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Visiteur</th>
+            <th scope="col">Date de naissance</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Pays</th>
+            <th scope="col">Tarif réduit</th>
+        </tr>
+        </thead>
+
+            {% for ticket in booking.tickets %}
+                            <tbody>
+                                    <tr>
+                                            <th scope="row"> Ticket n° {{ loop.index }} </th>
+                                            <td>{{ ticket.lastName }} {{ ticket.firstName }}</td>
+                                            <td>{{ ticket.birthDate | date('d/m/Y') }}</td>
+                                            <td> {{ ticket.price }} euros</td>
+                                             <td> {{ ticket.country }}</td>
+                                             <td> {{ ticket.reduction? "Oui":"Non" }}</td>
+                                    </tr>
+                            </tbody>
+            {% endfor %}
+    </table>
+
+        <form action="" method="POST">
+                <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="pk_test_Ww2Gco5S1XyEYBOc9D1WpzVz00ck9Py7yF"
+                        data-amount="{{booking.totalPrice * 100}}"
+                        data-name="Musée du Louvre"
+                        data-description="Billet d'entrée"
+                        data-image="images/logo.jpg"
+                        data-currency="eur"
+                        data-allow-remember-me="false"
+                        data-label="Accéder au paiement"
+                        data-locale="auto">
+                </script>
+        </form>
+</div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

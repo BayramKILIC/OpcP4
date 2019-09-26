@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Achat de billets en ligne{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    {% for fticket in form.tickets %}
+      Visiteur n° {{ loop.index }}
+        {{ form_widget(fticket) }}
+        <hr>
+    {% endfor %}
+    <p>Si vous cochez la case réduction, vous devez obligatoirement présenter un justificatif (carte d’étudiant, militaire ou équivalent) lors de votre entrée. <br/></p>
+
+    <button type="submit" class="btn btn-success">Valider</button>
+    {{ form_end(form) }}
+
+
+    {# TODO message pour reduction #}
+
+
+{% endblock %}

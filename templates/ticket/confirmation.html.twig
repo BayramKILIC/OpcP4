@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Achat de billets en ligne{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="col-8 offset-2 text-center mt-5 border border-secondary pt-4 pb-4">
+        <h3>Confirmation de votre commande</h3>
+        Votre commande a bien été effectué. <br/>
+        Votre numero de commande : {{ booking.orderCode }} <br/>
+        Un email de confirmation a été envoyé à votre adresse <strong>{{ booking.email }} </strong><br/>
+        <a href="{{path('home')}}"> Revenir à la page d'acceuil</a>
+    </div>
+
+
+
+
+{% endblock %}

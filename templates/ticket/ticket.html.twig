@@ -4,4 +4,11 @@
 
 {% block body %}
 
+    {{ form_start(formStepOne) }}
+    {{ form_widget(formStepOne) }}
+    <button type="submit" class="btn btn-success">Valider</button>
+    {{ form_end(formStepOne) }}
+
+
+
 {% endblock %}
