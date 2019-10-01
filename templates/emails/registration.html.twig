@@ -1,23 +1,30 @@
-<img src="{{ imgLink }}">
+<p>Madame, monsieur, </p>
 
-Madame, monsieur,
+<p> Votre commande n° {{ booking.orderCode }} a été confirmé. Ci-dessous un récapitulatif : <br/>
 
-<p> votre commande n° {{ booking.orderCode }} a été confirmé. Ci-dessous un récapitulatif de votre commande : </p>
+<ul>
+        <li>Prix total : {{ booking.totalPrice }} </li>
+        <li> Date de la commande : {{ booking.orderDate | date('d/m/Y')}}</li>
+</ul>
+</p>
 
-Prix total : {{ booking.totalPrice }}
-Date de la commande : {{ booking.orderDate | date('d/m/Y')}}
+<p>Ci-dessous, un résumé de vos tickets</p>
 
 {% for ticket in booking.tickets %}
-    <tbody>
-    <tr>
-        <th scope="row"> Ticket n° {{ loop.index }} </th>
-        <td>{{ ticket.lastName }} {{ ticket.firstName }}</td>
-        <td>{{ ticket.birthDate | date('d/m/Y') }}</td>
-        <td> {{ ticket.price }} euros</td>
-        <td> {{ ticket.country }}</td>
-        <td> {{ ticket.reduction? "Oui":"Non" }}</td>
-    </tr>
-    </tbody>
+
+<ul>
+        <li> Ticket n° {{ loop.index }} </li>
+        <li>{{ ticket.lastName }} {{ ticket.firstName }}</li>
+        <li>{{ ticket.birthDate | date('d/m/Y') }}</li>
+        <li> {{ ticket.price }} euros</li>
+        <li> {{ ticket.country }}</li>
+        <li> {{ ticket.reduction? "Oui":"Non" }}</li>
+</ul>
+
+        <p> Attention ! Veuillez imprimer ces tickets afin de les présenter au gichet. Si vous aviez choisi le tarif
+        réduction, un justificatif vous sera demandé.</p>
+    <p> Vous souhaitant bonne réception par avance. A très bientôt dans le musée du Louvre.</p>
 {% endfor %}
 
-{# Makes an absolute URL to the /images/logo.png file #}
+<img src="{{ imgLink }}"><br/>
+
