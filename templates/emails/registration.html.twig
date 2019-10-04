@@ -3,7 +3,7 @@
 <p> Votre commande n° {{ booking.orderCode }} a été confirmé. Ci-dessous un récapitulatif : <br/>
 
 <ul>
-        <li>Prix total : {{ booking.totalPrice }} </li>
+        <li>Prix total : {{ booking.totalPrice }} euros </li>
         <li> Date de la commande : {{ booking.orderDate | date('d/m/Y')}}</li>
 </ul>
 </p>
@@ -14,14 +14,14 @@
 
 <ul>
         <li> Ticket n° {{ loop.index }} </li>
-        <li>{{ ticket.lastName }} {{ ticket.firstName }}</li>
-        <li>{{ ticket.birthDate | date('d/m/Y') }}</li>
-        <li> {{ ticket.price }} euros</li>
-        <li> {{ ticket.country }}</li>
-        <li> {{ ticket.reduction? "Oui":"Non" }}</li>
+        <li>Nom prénom : {{ ticket.lastName }} {{ ticket.firstName }}</li>
+        <li>Date de naissance : {{ ticket.birthDate | date('d/m/Y') }}</li>
+        <li>Prix total :  {{ ticket.price }} euros</li>
+        <li> Pays : {{ ticket.country }}</li>
+        <li> Achat ticket réduction : {{ ticket.reduction? "Oui":"Non" }}</li>
 </ul>
 
-        <p> Attention ! Veuillez imprimer ces tickets afin de les présenter au gichet. Si vous aviez choisi le tarif
+        <p> Attention ! Veuillez imprimer ce billet afin de le présenter au guichet. Si vous aviez choisi le tarif
         réduction, un justificatif vous sera demandé.</p>
     <p> Vous souhaitant bonne réception par avance. A très bientôt dans le musée du Louvre.</p>
 {% endfor %}

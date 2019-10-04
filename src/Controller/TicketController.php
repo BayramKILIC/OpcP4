@@ -74,19 +74,14 @@ class TicketController extends AbstractController
     public function orderRecap(BookingManager $bookingManager, Request $request)
     {
 
-        $booking = $bookingManager->getCurrentBooking(['fillTickets','priceComputed']);
+        $booking = $bookingManager->getCurrentBooking(['fillTickets', 'priceComputed']);
         if ($request->isMethod('POST')) {
 
             if ($bookingManager->doPayment($booking)) {
                 return $this->redirect($this->generateUrl('order_confirmation'));
-
-            } else {
-
-                $this->addFlash(
-                    'danger',
-                    'Un problème de paiement a été rencontré, merci de réessayer'
-                );
             }
+
+            $this->addFlash('danger', 'Un problème de paiement a été rencontré, merci de réessayer');
         }
 
         return $this->render('ticket/recap.html.twig', [

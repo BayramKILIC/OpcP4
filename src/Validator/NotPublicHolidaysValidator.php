@@ -39,9 +39,9 @@ class NotPublicHolidaysValidator extends ConstraintValidator
 
         if (in_array($booking->getVisitDate()->format('Y-m-d'), $publicHolidays )) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     public function validate($value, Constraint $constraint)
